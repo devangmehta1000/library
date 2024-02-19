@@ -13,8 +13,6 @@ The partial matches are performed using fuzzy search. This takes care of common 
 
 A SqlLite database is used for this challenge. The sample data is as shown below
 
-#Books
 ![image](https://github.com/devangmehta1000/library/assets/29085371/09b048c4-9039-4f03-a6cc-e1b3503b6235)
 
-#Author
 ![image](https://github.com/devangmehta1000/library/assets/29085371/65375a6a-9ebc-4b36-9173-ae512755f8e2)
