@@ -1,15 +1,13 @@
-# library
+# Library System - Code Challenge
 A library system built as a part of coding challenge, offering a basic search functionality.
 
 There are two endpoints - GenerateToken and Search.
 
-#GenerateToken
-GenerateToken endpoint takes a role parameter and creates a jwt using symmetric key. The different roles is used to test authorization.
+#GenerateToken - GenerateToken endpoint takes a role parameter and creates a jwt using symmetric key. The different roles is used to test authorization.
 
-#Search
-The token generated above is then used (in the Authorization header) to authenticate and authorise the search requests.
+#Search - The token generated above is then used (in the Authorization header) to authenticate and authorise the search requests.
 The search endpoint takes a free text input and searches against - title, genre, type, publication year, author name.
-The partial matches are performed using fuzzy search. This takes care of common typos - e.g. NonFictional will get match to Non-Fictional.
+The partial matches are performed using fuzzy search. This takes care of common typos - e.g. NonFictional will match Non-Fictional.
 
 A SqlLite database is used for this challenge. The sample data is as shown below
 
