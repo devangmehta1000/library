@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace Library;
+namespace Library.Mapper;
 public class AgeResolver : IValueResolver<Services.Models.Book, Controllers.Models.Author, int?>
 {
     public int? Resolve(Services.Models.Book source, Controllers.Models.Author destination, int? destMember, ResolutionContext context)
@@ -14,8 +14,8 @@ public class AgeResolver : IValueResolver<Services.Models.Book, Controllers.Mode
         int age = currentDate.Year - source.Author.DateOfBirth.Value.Year;
 
         // Check if the birthday has occurred this year
-        if (currentDate.Month < source.Author.DateOfBirth.Value.Month || 
-            (currentDate.Month == source.Author.DateOfBirth.Value.Month && currentDate.Day < source.Author.DateOfBirth.Value.Day))
+        if (currentDate.Month < source.Author.DateOfBirth.Value.Month ||
+            currentDate.Month == source.Author.DateOfBirth.Value.Month && currentDate.Day < source.Author.DateOfBirth.Value.Day)
         {
             age--;
         }

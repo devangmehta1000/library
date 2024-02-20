@@ -13,6 +13,6 @@ public class Author
     public required string Gender { get; set; }
     public string? DateOfBirth { get; set; }
     public int? Age { get; set; }
-    public List<string>? BooksAuthored { get; set; } 
+    public List<string> BooksAuthored { get; set; } 
     
 }

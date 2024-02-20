@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Xunit;
 using Library.Data;
 using Library.Services;
+using Library.Mapper;
+using Moq;
 
 namespace Library.Tests
 {
@@ -10,6 +12,7 @@ namespace Library.Tests
     {
         private LibraryService _libraryService;
         private IMapper _mapper;
+        private Mock<IConfiguration> _config;
 
         public LibraryServiceTests()
         {
@@ -28,8 +31,11 @@ namespace Library.Tests
 
             var context = new LibraryContext(options);
 
+            _config = new Mock<IConfiguration>();
+            _config.Setup(config => config["Fuzzy:Tolerance"]).Returns("70");
+
             // initialise repository
-            _libraryService = new LibraryService(context, _mapper);
+            _libraryService = new LibraryService(context, _mapper, _config.Object);
         }
 
         [Fact]

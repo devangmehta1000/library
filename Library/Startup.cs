@@ -34,6 +34,7 @@ namespace Library
             // TODO: Configure CORS, AntiForgeryToken and XSS 
 
             // configure jwt auth
+            // instead of tightly coupling the auth using symmetric key, we would want to inject an auth provider. This would allow us to onfigure our app to use different auth providers 
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

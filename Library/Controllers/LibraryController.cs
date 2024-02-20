@@ -1,5 +1,4 @@
 using AutoMapper;
-using Library.Controllers.Models;
 using Library.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +10,7 @@ namespace Library.Controllers
     [Authorize(Roles = "admin")]
     [ApiController]
     [Route("api/library")]
-    public class LibraryController(ILibraryService libraryRepository, IMapper mapper, ILogger<LibraryController> logger) : ControllerBase
+    public class LibraryController(ILibraryService libraryService, IMapper mapper, ILogger<LibraryController> logger) : ControllerBase
     {
         /// <summary>
         /// Searches the library of books against the following fields -
@@ -21,14 +20,19 @@ namespace Library.Controllers
         /// <returns>A composite search result consisting of the list of books and list of authors</returns>
         [HttpGet("search")]
         [SwaggerOperation("Search")]
-        [SwaggerResponse(200, "List of books and list of authors", typeof(List<SearchResult>))]
+        [SwaggerResponse(200, "List of books and list of authors", typeof(List<Models.SearchResult>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad Request")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error")]
-        public async Task<ActionResult<List<SearchResult>>> SearchBooks([FromQuery] [Required] [MinLength(2)] [MaxLength(200)] string searchTerm)
+        public async Task<ActionResult<List<Models.SearchResult>>> SearchBooks([FromQuery] [Required] [MinLength(2)] [MaxLength(200)] string searchTerm)
         {
             try
             {
-                var books = await libraryRepository.Search(searchTerm);
+                if(searchTerm == "throw")
+                {
+                    throw new Exception("SearchTerm is throw");
+                }
+
+                var books = await libraryService.Search(searchTerm);
 
                 if (books.Count == 0)
                 {
@@ -38,7 +42,7 @@ namespace Library.Controllers
                 var searchedBooks = mapper.Map<List<Models.Book>>(books);
                 var searchedAuthors = mapper.Map<List<Models.Author>>(books).DistinctBy(a => a.AuthorId).ToList();
 
-                var searchResult = new SearchResult { Books = searchedBooks, Authors = searchedAuthors };
+                var searchResult = new Models.SearchResult { Books = searchedBooks, Authors = searchedAuthors };
 
                 return Ok(searchResult);
             }
